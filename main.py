@@ -8,9 +8,13 @@ from colors import *
 # Draw the window
 WIN = pygame.display.set_mode((CELL_WIDTH * GRID_WIDTH, CELL_WIDTH * GRID_HEIGHT))
 WIN.fill(WHITE)
+pygame.display.set_caption('MINESWEEPER')
 
 # 2d array which will hold the grid
 grid = []
+
+# number of mines in the game
+MINES = 99
 
 
 # set up the canvas and the game board
@@ -52,7 +56,7 @@ def startGame(mx, my) :
                 mineSpots.remove(grid[i][j])
 
 
-    for m in range(0, 99) :
+    for m in range(0, MINES) :
         index = random.randrange(0, len(mineSpots))
         curCell = mineSpots[index]
         grid[curCell.i][curCell.j].mine = True
@@ -61,7 +65,6 @@ def startGame(mx, my) :
     if startCell.reveal(WIN, grid) == -1 :
         endGame()
         
-
 
 
 def main() :
@@ -95,7 +98,7 @@ def main() :
                     for row in grid :
                         for cell in row :
                             if mx > cell.x and mx < cell.x + CELL_WIDTH and my > cell.y and my < cell.y + CELL_WIDTH :
-                                pass
+                                cell.placeFlag(WIN)
 
     
     pygame.quit()
